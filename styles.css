@@ -20,7 +20,7 @@ body {
    ------------------------- */
 header {
   text-align: center;
-  padding: 40px 20px; /* reducido para no empujar todo */
+  padding: 40px 20px;
   background: #0044aa;
   color: white;
   width: 80%;
@@ -36,7 +36,7 @@ header {
 }
 
 .logo {
-  width: 220px;    /* cuadrado y pequeño encima del título */
+  width: 220px;
   height: 220px;
   object-fit: cover;
   border-radius: 10px;
@@ -108,52 +108,49 @@ button:hover { transform: translateY(-2px); background: #003077; }
    ESCENARIO (GAME)
    ------------------------- */
 #game {
-  width: 860px;          /* un pelín más ancho que antes para marco */
-  height: 440px;         /* más espacio para saltos */
+  width: 860px;
+  height: 440px;
   border: 5px solid #000;
-  background: linear-gradient(#6fe0ff 0%, #9fe8ff 40%); /* fondo base (se sobrepone el escenario) */
+  background: linear-gradient(#6fe0ff 0%, #9fe8ff 40%);
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.45);
   margin: 14px 0 30px;
 }
 
-/* escenario largo (esto se repite horizontalmente) */
 #escenario {
   position: absolute;
   left: 0;
   top: 0;
-  width: 20000px;                         /* escenario largo para desplazamiento */
+  width: 20000px;
   height: 100%;
-  background-image: url("fondo.jpg"); /* imagen del cielo + pasto */
+  background-image: url("fondo.jpg");
   background-repeat: repeat-x;
-  background-position: 0 bottom;          /* JS cambiará el offset X */
-  background-size: auto 100%;             /* mantener altura completa del área */
+  background-position: 0 bottom;
+  background-size: auto 100%;
   z-index: 1;
 }
 
-/* Suelo/pasto: invisible visualmente si tu fondo ya tiene pasto.
-   lo dejamos para manejar dónde pisa Mario (colisión visual) */
 #suelo {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 20000px;
-  height: 88px;                          /* altura del "suelo" físico */
-  background: transparent;               /* no mostrar ladrillos */
+  height: 88px;
+  background: transparent;
   z-index: 2;
 }
 
 /* -------------------------
-   MARIO (posición sobre el pasto)
+   MARIO
    ------------------------- */
 #mario {
   position: absolute;
-  width: 86px;     /* más grande */
+  width: 86px;
   height: 86px;
-  left: 120px;     /* posición inicial horizontal fija en pantalla */
-  bottom: 88px;    /* justo encima del suelo (pasto) */
-  background-image: url("mario\ corriendoxd.png"); /* tu imagen */
+  left: 120px;
+  bottom: 88px;
+  background-image: url("mario corriendoxd.png");
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 6;
@@ -161,28 +158,28 @@ button:hover { transform: translateY(-2px); background: #003077; }
   will-change: transform, bottom;
 }
 
-/* animación de caminar (sutil) */
 .mario-camina {
   animation: caminar-bob 0.45s steps(2) infinite;
 }
+
 @keyframes caminar-bob {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-3px); }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
   100% { transform: translateY(0); }
 }
 
-/* animación de salto (clase saltando añadida por JS) */
 .saltando {
   animation: salto-move 0.55s ease-out;
 }
+
 @keyframes salto-move {
   0% { transform: translateY(0); }
-  40% { transform: translateY(-120px); } /* altura de salto */
+  40% { transform: translateY(-120px); }
   100% { transform: translateY(0); }
 }
 
 /* -------------------------
-   BLOQUES "?" (más grandes y arriba)
+   BLOQUES
    ------------------------- */
 .bloque {
   position: absolute;
@@ -192,22 +189,20 @@ button:hover { transform: translateY(-2px); background: #003077; }
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 5;
-  /* TOP será controlado por JS si quieres; si no, este valor se usa */
-  bottom: 210px;   /* colocadas sobre el pasto (ej. 210px) */
+  bottom: 210px;
   box-shadow: 0 4px 6px rgba(173, 168, 168, 0.25);
 }
 
-/* si JS coloca top/left inline, prevalecen */
 .bloque:active { transform: scale(.98); }
 
 /* -------------------------
-   CAJA DE PREGUNTA (modal dentro del juego)
+   CAJA DE PREGUNTA
    ------------------------- */
 #preguntaBox {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   z-index: 40;
   width: 460px;
   padding: 26px;
@@ -231,7 +226,7 @@ footer {
 }
 
 /* -------------------------
-   MAPA DE NIVELES (cuadro)
+   MAPA DE NIVELES
    ------------------------- */
 #pantallaMapa {
   display: flex;
@@ -277,7 +272,6 @@ footer {
   transform: scale(1.06);
 }
 
-/* progreso y botones */
 .progreso { width: 100%; text-align: left; margin-top: 6px; }
 .progreso progress { width: 100%; height: 16px; border-radius: 8px; }
 
@@ -287,7 +281,7 @@ footer {
   margin-top: 12px;
 }
 
-/* ajustes móviles razonables */
+/* ajustes móviles */
 @media (max-width: 900px) {
   #game { width: 92%; height: 360px; }
   #escenario { background-size: cover; }
@@ -295,9 +289,9 @@ footer {
   h1 { font-size: 1.8rem; }
 }
 
-/* ============================
-   CONTROLES TÁCTILES (MÓVIL) - AÑADIDO
-   ============================ */
+/* ==========================
+   CONTROLES TÁCTILES
+   ========================== */
 #controlesTouch {
   position: fixed;
   bottom: 20px;
@@ -309,12 +303,12 @@ footer {
   z-index: 9999;
   gap: 12px;
   padding: 0 10px;
-  pointer-events: none; /* por defecto inactivo; botones individuales tendrán pointer-events */
+  pointer-events: none;
 }
 
 #controlesTouch .btn-control {
   pointer-events: auto;
-  width: 60px;   /* más pequeño */
+  width: 60px;
   height: 60px;
   font-size: 26px;
   font-weight: bold;
@@ -327,16 +321,37 @@ footer {
   align-items: center;
   justify-content: center;
   user-select: none;
-  -webkit-user-select: none;
   touch-action: none;
 }
 
 @media (min-width: 900px) {
-  /* Ocultar controles en computadora */
   #controlesTouch { display: none !important; }
 }
 
 @media (max-width: 900px) {
-  /* Mostrar controles en celulares */
   #controlesTouch.oculto { display: flex !important; }
+}
+
+/* ==========================
+   AJUSTE DEL FONDO EN CELULAR
+   ========================== */
+
+/* Celular vertical */
+@media (max-width: 900px) and (orientation: portrait) {
+  #escenario {
+    background-size: cover;
+    background-position: center bottom;
+  }
+}
+
+/* Celular horizontal */
+@media (max-width: 900px) and (orientation: landscape) {
+  #game {
+    height: 260px;
+  }
+
+  #escenario {
+    background-size: cover;
+    background-position: center bottom;
+  }
 }
