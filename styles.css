@@ -1,0 +1,342 @@
+/* =========================
+   STYLES COMPLETOS (PEGA TODO)
+   ========================= */
+
+/* reset básico */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: linear-gradient(180deg, #6aaaff 0%, #4488dd 100%);
+  font-family: "Arial", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* -------------------------
+   ENCABEZADO
+   ------------------------- */
+header {
+  text-align: center;
+  padding: 40px 20px; /* reducido para no empujar todo */
+  background: #0044aa;
+  color: white;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.logo-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 220px;    /* cuadrado y pequeño encima del título */
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-top: 4px;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.35);
+}
+
+.descripcion {
+  font-size: 14px;
+  color: #e6f2ff;
+  margin-top: 6px;
+}
+
+/* -------------------------
+   LAYOUT PRINCIPAL
+   ------------------------- */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+/* tarjetas centrales */
+#pantallaInicio, #infoJugador, #pantallaInstrucciones {
+  background: white;
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  text-align: center;
+  margin: 20px;
+  max-width: 700px;
+}
+
+/* botones / inputs */
+input[type="text"] {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #0044aa;
+  border-radius: 8px;
+  width: 260px;
+  margin: 10px 0;
+}
+
+button {
+  padding: 12px 22px;
+  font-size: 15px;
+  background: #0044aa;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 6px;
+  transition: transform .12s ease, background .12s;
+}
+
+button:hover { transform: translateY(-2px); background: #003077; }
+
+.oculto { display: none !important; }
+
+/* -------------------------
+   ESCENARIO (GAME)
+   ------------------------- */
+#game {
+  width: 860px;          /* un pelín más ancho que antes para marco */
+  height: 440px;         /* más espacio para saltos */
+  border: 5px solid #000;
+  background: linear-gradient(#6fe0ff 0%, #9fe8ff 40%); /* fondo base (se sobrepone el escenario) */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  margin: 14px 0 30px;
+}
+
+/* escenario largo (esto se repite horizontalmente) */
+#escenario {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20000px;                         /* escenario largo para desplazamiento */
+  height: 100%;
+  background-image: url("fondo.jpg"); /* imagen del cielo + pasto */
+  background-repeat: repeat-x;
+  background-position: 0 bottom;          /* JS cambiará el offset X */
+  background-size: auto 100%;             /* mantener altura completa del área */
+  z-index: 1;
+}
+
+/* Suelo/pasto: invisible visualmente si tu fondo ya tiene pasto.
+   lo dejamos para manejar dónde pisa Mario (colisión visual) */
+#suelo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 20000px;
+  height: 88px;                          /* altura del "suelo" físico */
+  background: transparent;               /* no mostrar ladrillos */
+  z-index: 2;
+}
+
+/* -------------------------
+   MARIO (posición sobre el pasto)
+   ------------------------- */
+#mario {
+  position: absolute;
+  width: 86px;     /* más grande */
+  height: 86px;
+  left: 120px;     /* posición inicial horizontal fija en pantalla */
+  bottom: 88px;    /* justo encima del suelo (pasto) */
+  background-image: url("mario\ corriendoxd.png"); /* tu imagen */
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 6;
+  transition: bottom .12s linear, transform .06s linear;
+  will-change: transform, bottom;
+}
+
+/* animación de caminar (sutil) */
+.mario-camina {
+  animation: caminar-bob 0.45s steps(2) infinite;
+}
+@keyframes caminar-bob {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+/* animación de salto (clase saltando añadida por JS) */
+.saltando {
+  animation: salto-move 0.55s ease-out;
+}
+@keyframes salto-move {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(-120px); } /* altura de salto */
+  100% { transform: translateY(0); }
+}
+
+/* -------------------------
+   BLOQUES "?" (más grandes y arriba)
+   ------------------------- */
+.bloque {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  background-image: url("caja.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 5;
+  /* TOP será controlado por JS si quieres; si no, este valor se usa */
+  bottom: 210px;   /* colocadas sobre el pasto (ej. 210px) */
+  box-shadow: 0 4px 6px rgba(173, 168, 168, 0.25);
+}
+
+/* si JS coloca top/left inline, prevalecen */
+.bloque:active { transform: scale(.98); }
+
+/* -------------------------
+   CAJA DE PREGUNTA (modal dentro del juego)
+   ------------------------- */
+#preguntaBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 40;
+  width: 460px;
+  padding: 26px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.98);
+  border: 4px solid #0044aa;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  text-align: center;
+  display: none;
+}
+
+/* -------------------------
+   FOOTER
+   ------------------------- */
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 18px;
+  width: 100%;
+}
+
+/* -------------------------
+   MAPA DE NIVELES (cuadro)
+   ------------------------- */
+#pantallaMapa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  background: #fff;
+  padding: 26px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  width: 86%;
+  max-width: 760px;
+  margin: 22px auto;
+  border: 3px solid #0044aa;
+}
+
+.niveles-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  width: 100%;
+  padding: 10px 4px;
+  justify-items: center;
+}
+
+.nivel {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #666;
+  box-shadow: inset 0 -6px 12px rgba(0,0,0,0.05);
+}
+
+.nivel.activo {
+  background: linear-gradient(180deg,#ffb03a,#ff8c00);
+  color: white;
+  box-shadow: 0 6px 18px rgba(255, 160, 30, 0.25);
+  transform: scale(1.06);
+}
+
+/* progreso y botones */
+.progreso { width: 100%; text-align: left; margin-top: 6px; }
+.progreso progress { width: 100%; height: 16px; border-radius: 8px; }
+
+.botonesMapa {
+  display: flex;
+  gap: 18px;
+  margin-top: 12px;
+}
+
+/* ajustes móviles razonables */
+@media (max-width: 900px) {
+  #game { width: 92%; height: 360px; }
+  #escenario { background-size: cover; }
+  .logo { width: 96px; height: 96px; }
+  h1 { font-size: 1.8rem; }
+}
+
+/* ============================
+   CONTROLES TÁCTILES (MÓVIL) - AÑADIDO
+   ============================ */
+#controlesTouch {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 9999;
+  gap: 12px;
+  padding: 0 10px;
+  pointer-events: none; /* por defecto inactivo; botones individuales tendrán pointer-events */
+}
+
+#controlesTouch .btn-control {
+  pointer-events: auto;
+  width: 60px;   /* más pequeño */
+  height: 60px;
+  font-size: 26px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.45);
+  color: white;
+  border: 3px solid white;
+  border-radius: 18px;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+@media (min-width: 900px) {
+  /* Ocultar controles en computadora */
+  #controlesTouch { display: none !important; }
+}
+
+@media (max-width: 900px) {
+  /* Mostrar controles en celulares */
+  #controlesTouch.oculto { display: flex !important; }
+}

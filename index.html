@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Mario Matemático</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 🎵 Música de fondo -->
+  <audio id="musicaFondo" autoplay loop>
+    <source src="audio de fondo (2).mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <header>
+    <div class="logo-contenedor">
+      <img src="logotipo.jpg" alt="Logo E&E MATH GAMES" class="logo">
+      <h1>🎮 Mario Matemático</h1>
+      <p class="descripcion">
+        Responde las operaciones matemáticas y ayuda a Mario a superar los niveles.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 🔹 Pantalla de Registro (única visible al inicio) -->
+    <section id="pantallaInicio">
+      <h2>Registro</h2>
+      <input type="text" id="nombreJugador" placeholder="Escribe tu nombre" />
+      <br />
+      <button id="btnRegistrar">Registrar</button>
+    </section>
+
+    <!-- 🔹 Pantalla de Instrucciones (se muestra después de registrarse) -->
+    <section id="pantallaInstrucciones" class="oculto">
+      <h2>📖 ¿Cómo Jugar?</h2>
+      <ul class="instrucciones-lista">
+        <li>🎯 <strong>Objetivo:</strong> Completa los 20 niveles respondiendo operaciones matemáticas correctamente.</li>
+        <li>❤️ <strong>Vidas:</strong> Tienes 3 vidas. Si te equivocas, pierdes una vida.</li>
+        <li>🏃 <strong>Movimiento:</strong> Usa las flechas ← → para mover a Mario.</li>
+        <li>⬆️ <strong>Saltar:</strong> Presiona ESPACIO o flecha ↑ para saltar.</li>
+        <li>📦 <strong>Bloques:</strong> Golpea los bloques amarillos desde abajo para activar una pregunta.</li>
+        <li>🧮 <strong>Responde:</strong> Escribe la respuesta correcta y presiona Enter.</li>
+        <li>⭐ <strong>Puntos:</strong> Cada respuesta correcta te da 10 puntos.</li>
+      </ul>
+      <button id="btnComenzar">¡Comenzar Juego!</button>
+    </section>
+
+    <!-- 🔹 Pantalla del Mapa de Niveles (oculta al inicio) -->
+    <section id="pantallaMapa" class="oculto pantalla">
+      <div class="mapa-cuadro">
+        <h2>📘 Mapa de Niveles</h2>
+
+        <div id="nivelesContainer" class="niveles-grid">
+          <button class="nivel activo">1</button>
+          <button class="nivel bloqueado" disabled>2</button>
+          <button class="nivel bloqueado" disabled>3</button>
+          <button class="nivel bloqueado" disabled>4</button>
+          <button class="nivel bloqueado" disabled>5</button>
+          <button class="nivel bloqueado" disabled>6</button>
+          <button class="nivel bloqueado" disabled>7</button>
+          <button class="nivel bloqueado" disabled>8</button>
+          <button class="nivel bloqueado" disabled>9</button>
+          <button class="nivel bloqueado" disabled>10</button>
+          <button class="nivel bloqueado" disabled>11</button>
+          <button class="nivel bloqueado" disabled>12</button>
+          <button class="nivel bloqueado" disabled>13</button>
+          <button class="nivel bloqueado" disabled>14</button>
+          <button class="nivel bloqueado" disabled>15</button>
+          <button class="nivel bloqueado" disabled>16</button>
+          <button class="nivel bloqueado" disabled>17</button>
+          <button class="nivel bloqueado" disabled>18</button>
+          <button class="nivel bloqueado" disabled>19</button>
+          <button class="nivel bloqueado" disabled>20</button>
+        </div>
+
+        <div class="progreso">
+          <label>Progreso Total:</label>
+          <progress id="barraProgreso" value="0" max="100"></progress>
+        </div>
+
+        <div class="botonesMapa">
+          <button id="btnIniciarJuego" class="btn-iniciar">Iniciar</button>
+          <button id="btnVolverMenu" class="btn-volver">Volver al Menú</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🔹 Info del jugador -->
+    <section id="infoJugador" class="oculto">
+      <p id="saludo">👋 Hola</p>
+      <p>🎯 Puntos: <span id="puntos">0</span></p>
+      <p>🏆 Record: <span id="record">0</span></p>
+      <p>📈 Nivel: <span id="nivel">1</span> / 20</p>
+      <p>❤️ Vidas: <span id="vidasDisplay">3</span></p>
+      <button id="btnJugar">¡Jugar!</button>
+    </section>
+
+    <!-- 🔹 Contenedor del juego -->
+    <section id="contenedorJuego" class="oculto">
+      <h2 class="tituloJuego">🎮 Mario Matemático</h2>
+      <div class="statsBar">
+        <span>👤 <strong id="nombreEnJuego"></strong></span>
+        <span>📈 Nivel: <strong id="nivelEnJuego">1</strong>/20</span>
+        <span>🎯 Puntos: <strong id="puntosEnJuego">0</strong></span>
+        <span id="vidasEnJuego">
+          <span class="vida">❤️</span>
+          <span class="vida">❤️</span>
+          <span class="vida">❤️</span>
+        </span>
+      </div>
+      <div id="game">
+        <div id="escenario">
+          <div id="suelo"></div>
+        </div>
+        <div id="mario"></div>
+        <div id="mensaje"></div>
+        <div id="preguntaBox" class="oculto">
+          <p id="preguntaTexto"></p>
+          <input type="text" id="inputRespuesta" placeholder="Tu respuesta" />
+          <br />
+          <button id="btnResponder">Responder</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 E&E MATH GAMES</p>
+    <p><a href="https://www.tiktok.com/@math.games1?_r=1&_t=ZM-91SZRQjNQAW" target="_blank">Contacto</a>
+| <a href="https://github.com/Esther-cv">Sitio Oficial</a></p>
+  </footer>
+
+  <!-- =========================
+       CONTROLES TÁCTILES (AGREGADOS)
+       ========================= -->
+  <div id="controlesTouch" class="oculto" aria-hidden="true">
+    <button id="btnIzquierda" class="btn-control" aria-label="mover izquierda">⟵</button>
+    <button id="btnSaltar" class="btn-control" aria-label="saltar">⟰</button>
+    <button id="btnDerecha" class="btn-control" aria-label="mover derecha">⟶</button>
+  </div>
+
+  <script>
+    // === Volver al menú (registro) ===
+    const btnVolverMenu = document.getElementById("btnVolverMenu");
+    const pantallaMapa = document.getElementById("pantallaMapa");
+    const pantallaInicio = document.getElementById("pantallaInicio");
+
+    if (btnVolverMenu) {
+      btnVolverMenu.addEventListener("click", () => {
+        pantallaMapa.classList.add("oculto");
+        pantallaInicio.classList.remove("oculto");
+      });
+    }
+  </script>
+
+  <script src="game.js"></script>
+</body>
+</html>
