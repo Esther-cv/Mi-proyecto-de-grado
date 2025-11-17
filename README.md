@@ -19,6 +19,6 @@ Funciona en:
 - Teléfonos móviles (modo vertical y horizontal)
 
 ## 👩‍💻 Autora
-**emy** – Creadora y desarrolladora del proyecto  
+**ESTHER** – Creadora y desarrolladora del proyecto  
 © 2025 E&E MATH GAMES
 
